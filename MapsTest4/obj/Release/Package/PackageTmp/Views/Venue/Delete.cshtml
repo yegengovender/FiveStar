@@ -1,0 +1,43 @@
+﻿@model MapsTest4.Models.Venue
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>Venue</legend>
+
+    <div class="display-label">Title</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Title)
+    </div>
+
+    <div class="display-label">Industry</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Industry)
+    </div>
+
+    <div class="display-label">Comments</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Comments)
+    </div>
+
+    <div class="display-label">XPos</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.XPos)
+    </div>
+
+    <div class="display-label">YPos</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.YPos)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

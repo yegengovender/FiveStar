@@ -1,0 +1,82 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<h2>@ViewBag.Message</h2>
+
+    <style type="text/css">
+        #map_canvas { height: 100% }
+    </style>
+    <div id="map_canvas" style="width:100%; height:500px"></div>
+    
+
+@section footer {
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFRYLlvBvKfAj5sQHSUrJCxUB0jkcFmk0&sensor=true">
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            initialize();
+        });
+
+        function initialize() {
+
+            // Map defaults
+            var myLatlng = new google.maps.LatLng(-26.131196, 28.069451);
+            var zoomLevel = 15;
+
+            // Map instance
+            var mapOptions = {
+                center: myLatlng,
+                zoom: zoomLevel,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+
+            // Get Venues from DB
+            $.getJSON("/Locations", null, function (locations) {
+
+                $(locations).each(function () {
+                    // Draw marker for venue
+                    // this==venue
+                    var marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(this.YPos, this.XPos),
+                        map: map,
+                        draggable: false,
+                        animation: google.maps.Animation.DROP,
+                        title: this.Title
+                    });
+
+                    // Get balloon mark-up for venue
+                    var url = "/Locations/PopupContent/" + this.Id;
+                    $.post(url, function (contentString) {
+                        var infowindow = new google.maps.InfoWindow({
+                            content: contentString
+                        });
+
+                        // Attach balloon to click event of marker
+                        google.maps.event.addListener(marker, 'click', function () {
+                            infowindow.open(map, marker);
+                        });
+                    });
+
+                });
+
+            });
+
+            // Launch new venue screen on dbl-click
+            google.maps.event.addListener(map, 'dblclick', function (event) {
+                var pos = event.latLng;
+                var x = pos.Za; // Longitude
+                var y = pos.Ya; // Lattitude
+
+                var url = "/Locations/ClickAddVenue/?x=" + x + "&y=" + y;
+                $.post(url, function (contentString) {
+                    window.location.assign(contentString); // redirect
+                });
+            });
+
+        }
+    </script>
+    
+}

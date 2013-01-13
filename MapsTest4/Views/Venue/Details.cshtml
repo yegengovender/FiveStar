@@ -1,0 +1,40 @@
+﻿@model MapsTest4.Models.Venue
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Venue</legend>
+
+    <div class="display-label">Title</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Title)
+    </div>
+
+    <div class="display-label">Industry</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Industry)
+    </div>
+
+    <div class="display-label">Comments</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Comments)
+    </div>
+
+    <div class="display-label">XPos</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.XPos)
+    </div>
+
+    <div class="display-label">YPos</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.YPos)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

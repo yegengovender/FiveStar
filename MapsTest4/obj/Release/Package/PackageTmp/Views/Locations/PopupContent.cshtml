@@ -1,0 +1,32 @@
+﻿@model MapsTest4.Models.Venue
+
+@{
+    Layout = null;
+}
+
+<script>
+    var panoramaOptions = {
+        position: fenway,
+        pov: {
+            heading: 34,
+            pitch: 10,
+            zoom: 1
+        }
+    };
+
+    var panorama = new google.maps.StreetViewPanorama(document.getElementById('pano'), panoramaOptions);
+</script>
+
+<h2>@Model.Title</h2>
+
+<div id="pano">
+    <img src='http://maps.googleapis.com/maps/api/streetview?size=300x150&location=@Model.YPos, @Model.XPos&fov=90&sensor=false' alt="street view" />
+</div>        
+            
+<strong>Industry:</strong> @Model.Industry
+            
+<p>
+    @Model.Comments
+</p>
+            
+@Html.ActionLink("Edit", "Edit", "Venues", new { id = @Model.Id}, null)
